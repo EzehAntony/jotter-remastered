@@ -1,4 +1,4 @@
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/footer/Footer";
 import React from "react";
 import styles from "./layout.module.css";
 
