@@ -1,0 +1,33 @@
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerFooter {
+  background-color: #f5f6fd;
+  height: 60px;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 22px #b8b8b8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerFooter img {
+  width: 30px;
+  margin: 0 30px;
+  cursor: pointer;
+}
+
+.innerFooter img:nth-of-type(2) {
+  background-color: #2cc2ec;
+  width: 50px;
+  border-radius: 50%;
+}

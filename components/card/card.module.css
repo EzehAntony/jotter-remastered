@@ -1,0 +1,25 @@
+.card {
+  width: 200px;
+  height: 250px;
+  background-color: #e9f5fc;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px 0 10px 0;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 2px 2px 22px rgb(168, 168, 168);
+}
+
+@media (max-width: 800px) {
+  .card {
+    width: 150px;
+    height: 180px;
+    margin: 5px;
+  }
+}

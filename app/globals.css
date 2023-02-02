@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  background-color: #004949;
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: black;
+}
