@@ -44,8 +44,9 @@
 
 .form {
   position: relative;
-  width: 60%;
-  max-width: 300px;
+  width: 70%;
+  min-width: 350px;
+  max-width: 350px;
   min-height: 300px;
   padding: 5%;
   border: 2px solid #00bcf5;
@@ -114,7 +115,7 @@
 }
 
 #username {
-  color: #c5c5c5;
+  color: #6e6e6e;
   position: absolute;
   top: -12px;
   left: 20px;
@@ -185,6 +186,7 @@
 
   .form {
     max-width: 300px;
+    min-width: 280px;
   }
 
   .form h1 {

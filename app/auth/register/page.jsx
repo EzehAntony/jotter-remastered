@@ -87,7 +87,7 @@ const page = () => {
           {error && <Error data={error} />}
         </form>
         <p className={ubuntu.className}>
-          Already have an account? <Link href={"/auth/login"}> register</Link>
+          Already have an account? <Link href={"/auth/login"}> login</Link>
         </p>
       </div>
       <div className={styles.right}>
