@@ -18,27 +18,22 @@ export default NextAuth({
 
       async authorize(credentials) {
         const { username, password } = credentials;
-        try {
-          const { data } = await axios({
-            url: "http://localhost:3000/api/user/login",
-            method: "POST",
-            data: {
-              username: username,
-              password: password,
-            },
-            "content-type": "application/json",
+        await axios({
+          url: "https://crayonne-jotter.vercel.app/auth/login",
+          method: "POST",
+          data: {
+            username: username,
+            password: password,
+          },
+          "content-type": "application/json",
+        })
+          .then((res) => {
+            return res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            throw new Error(err.response.data);
           });
-          if (data) {
-            return data;
-          } else {
-            return null;
-          }
-        } catch (err) {
-          if (err.response.data) {
-          } else {
-            return err;
-          }
-        }
       },
     }),
   ],
@@ -52,7 +47,7 @@ export default NextAuth({
       }
     },
     session: ({ token, session }) => {
-      if (user) {
+      if (token) {
         session.id = token.id;
       }
       return token;

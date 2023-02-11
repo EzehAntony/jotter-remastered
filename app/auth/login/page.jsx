@@ -21,33 +21,34 @@ const page = () => {
   const [error, setError] = useState("");
   const session = useSession();
 
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
-
   const submit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       setError(null);
-      const res = await signIn("credentials", {
+      signIn("credentials", {
         redirect: false,
         username: username,
         password: password,
+      }).then(({ ok, error }) => {
+        if (ok) {
+          router.push("/home");
+          setLoading(false);
+          setError("Successfull login");
+        } else {
+          setLoading(false);
+          setError(error);
+        }
       });
-      if (res.status === "authenticated") {
-        setLoading(false);
-        setError(false);
-      } else if (res.status === "loading") {
-        setLoading(true);
-      } else {
-        setLoading(false);
-      }
     } catch (err) {
       console.log(error);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
 
   return (
     <div className={styles.login}>
