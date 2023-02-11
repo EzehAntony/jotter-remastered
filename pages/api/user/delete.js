@@ -1,5 +1,5 @@
-import user from "@/models/user";
-import dbConnect from "@/utils/mongodb";
+import user from "../../../models/user";
+import dbConnect from "../../../utils/mongodb";
 import bcryptjs from "bcryptjs";
 
 const handler = async (req, res) => {

@@ -3,9 +3,10 @@
 import { Ubuntu } from "@next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Snowfall from "react-snowfall";
 import styles from "./login.module.css";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -18,22 +19,32 @@ const page = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const session = useSession();
+
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
 
   const submit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       setError(null);
-      await axios({
-        url: "/api/login",
-        method: "POST",
-        withCredentials: true,
-        data: {
-          username: username,
-          password: password,
-        },
+      const res = await signIn("credentials", {
+        redirect: false,
+        username: username,
+        password: password,
       });
+      if (res.status === "authenticated") {
+        setLoading(false);
+        setError(false);
+      } else if (res.status === "loading") {
+        setLoading(true);
+      } else {
+        setLoading(false);
+      }
     } catch (err) {
+      console.log(error);
       setLoading(false);
     }
   };
@@ -45,9 +56,7 @@ const page = () => {
           <h1 className={ubuntu.className}>
             <span>Login</span>
           </h1>
-          <h2 className={ubuntu.className}>
-            A simple notepad app for making notes.
-          </h2>
+          <h2 className={ubuntu.className}>A simple notepad app</h2>
 
           <div className={styles.input}>
             <div className={styles.userLabel}>
@@ -75,16 +84,19 @@ const page = () => {
               />
             </div>
 
-            <button
-              onSubmit={submit}
-              className={ubuntu.className}
-              type="submit"
-            >
-              Login
+            <button type={"submit"} className={ubuntu.className}>
+              {loading && "loading..."}
+              {!loading && "login"}
             </button>
           </div>
 
-          {error && <Error data={error} />}
+          {error && error === "CredentialsSignin" ? (
+            <h5 className={(styles.error, ubuntu.className)}>
+              {"Something went wrong"}
+            </h5>
+          ) : (
+            <h5 className={(styles.error, ubuntu.className)}>{error}</h5>
+          )}
         </form>
         <p className={ubuntu.className}>
           Don't have an account? <Link href={"/auth/register"}> register</Link>

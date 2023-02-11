@@ -1,5 +1,5 @@
-import user from "@/models/user";
-import dbConnect from "@/utils/mongodb";
+import user from "../../../models/user";
+import dbConnect from "../../../utils/mongodb";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
@@ -8,7 +8,8 @@ const handler = async (req, res) => {
     try {
       const oldUser = await user.findById(id);
       if (oldUser) {
-        res.status(200).json(oldUser);
+        const { password, ...others } = oldUser._doc;
+        res.status(200).json(others);
       } else {
         res.status(500).json("No user with the provided ID");
       }

@@ -1,12 +1,11 @@
 "use client";
-import Image from "next/image";
-import { Inter, inr } from "@next/font/google";
+import { Stylish } from "@next/font/google";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import Snowfall from "react-snowfall";
 import { useEffect } from "react";
 
-const inter = Inter({ weight: "400", subsets: ["latin"] });
+const stylish = Stylish({ weight: "400", subsets: ["latin"] });
 
 export default function splash() {
   const router = useRouter();
@@ -19,8 +18,8 @@ export default function splash() {
   return (
     <main className={styles.main}>
       <img src="/note2.svg" alt="" />
-      <h1 className={inter.className}>Jotter</h1>
-      <h3 className={inter.className}>
+      <h1 className={stylish.className}>Jotter</h1>
+      <h3 className={stylish.className}>
         Create free notes and save them in our cloud!
       </h3>
       <button onClick={() => router.push("/auth/login")}>Start</button>

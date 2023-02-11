@@ -1,17 +1,19 @@
 import bcryptjs from "bcryptjs";
-import user from "@/models/user";
-import dbConnect from "@/utils/mongodb";
+import user from "../../../models/user";
+import dbConnect from "../../../utils/mongodb";
 
 const handler = async (req, res) => {
   await dbConnect();
   if (req.method === "POST") {
     const { username, password } = req.body;
     try {
-      const oldUser = await user.findOne({ username: username });
+      let oldUser;
+      oldUser = await user.findOne({ username: username });
       if (oldUser) {
-        const verify = bcryptjs.compare(password, oldUser.password);
+        const verify = await bcryptjs.compare(password, oldUser.password);
         if (verify) {
-          res.status(200).json("Verified and Logged in, but without a cookie");
+          const { password, ...others } = oldUser._doc;
+          res.status(200).json(others);
         } else {
           res.status(500).json("Incorrect password, try again!");
         }
