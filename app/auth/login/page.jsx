@@ -23,32 +23,27 @@ const page = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      setError(null);
-      signIn("credentials", {
-        redirect: false,
-        username: username,
-        password: password,
-      }).then(({ ok, error }) => {
-        console.log(ok, error);
-        if (ok) {
-          setError("Successfull login");
-          setLoading(false);
-          router.push("/home");
-        } else {
-          setLoading(false);
-          setError(error);
-        }
-      });
-    } catch (err) {
-      console.log(error);
-      setLoading(false);
-    }
+    setLoading(true);
+    setError(null);
+    signIn("credentials", {
+      redirect: false,
+      username: username,
+      password: password,
+    }).then(({ ok, error }) => {
+      if (ok) {
+        setError("Successfull login");
+        setLoading(false);
+        router.push("/home");
+      } else {
+        setLoading(false);
+        setError(error);
+      }
+    });
   };
 
   useEffect(() => {
-    console.log(session);
+    const { data } = session;
+    console.log(data);
   }, [session]);
 
   return (
@@ -70,7 +65,9 @@ const page = () => {
                 type="text"
                 value={username}
                 required={true}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) =>
+                  setUsername(e.target.value.trim().toLocaleLowerCase())
+                }
               />
             </div>
             <div className={styles.userLabel}>
@@ -82,7 +79,7 @@ const page = () => {
                 type="text"
                 required={true}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value.trim())}
               />
             </div>
 

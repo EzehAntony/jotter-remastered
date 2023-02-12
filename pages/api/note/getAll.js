@@ -2,13 +2,13 @@ import note from "@/models/note";
 import dbConnect from "@/utils/mongodb";
 
 const handler = async (req, res) => {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     await dbConnect();
-    const { userId } = req.body;
+    const { id } = req.body;
     try {
-      const notes = await note.find({ userId: userId });
+      const notes = await note.find({ userId: id });
       if (notes) {
-        res.status(200).json(oldNote);
+        res.status(200).json(notes);
       } else {
         res.status(500).json("No note with the provided ID");
       }

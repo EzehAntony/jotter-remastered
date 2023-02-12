@@ -27,6 +27,7 @@
 
 .home header h3 {
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 .home header input {

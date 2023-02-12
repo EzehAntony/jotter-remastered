@@ -3,6 +3,7 @@ import Card from "@/components/card/Card";
 import React, { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Ubuntu } from "@next/font/google";
+import { useSession } from "next-auth/react";
 
 const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
 const getData = async () => {
@@ -11,6 +12,8 @@ const getData = async () => {
 };
 
 function home() {
+  const session = useSession();
+  const user = session.data?.user;
   const colors = ["#E9F5FC", "#FFF5E1", "#FFE9F3", "#F3F5F7"];
   const random = Math.floor(Math.random() * 5);
   const rc = colors[random];
@@ -71,11 +74,13 @@ function home() {
     },
   ];
 
+  const clicker = () => {};
+
   return (
     <div className={styles.home}>
-      <header>
+      <header onClick={clicker}>
         <h3 className={ubuntu.className}>
-          Hello, <br /> Good morning!
+          Hello, <br /> {user?.username}!
         </h3>
         <input type="text" placeholder="search" />
       </header>

@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
+import user from "@/models/user";
 
 export default NextAuth({
   providers: [
@@ -44,8 +45,21 @@ export default NextAuth({
     }),
   ],
 
-  session: {
-    strategy: "jwt",
+  callbacks: {
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.user = user;
+      }
+
+      return token;
+    },
+    session: ({ session, token }) => {
+      if (token) {
+        session.user = token.user;
+      }
+
+      return session
+    },
   },
 
   pages: {
