@@ -31,10 +31,11 @@ const page = () => {
         username: username,
         password: password,
       }).then(({ ok, error }) => {
+        console.log(ok, error);
         if (ok) {
-          router.push("/home");
-          setLoading(false);
           setError("Successfull login");
+          setLoading(false);
+          router.push("/home");
         } else {
           setLoading(false);
           setError(error);

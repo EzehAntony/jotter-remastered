@@ -16,10 +16,11 @@ export default NextAuth({
         },
       },
 
-      async authorize(credentials) {
+      async authorize(credentials, req) {
+        const url = req.body.callbackUrl.split("/auth")[0];
         const { username, password } = credentials;
-        await axios({
-          url: "https://crayonne-jotter.vercel.app/auth/login",
+        const user = await axios({
+          url: `${url}/api/user/login`,
           method: "POST",
           data: {
             username: username,
@@ -31,32 +32,20 @@ export default NextAuth({
             return res.data;
           })
           .catch((err) => {
-            console.log(err);
-            throw new Error(err.response.data);
+            if (err.response.data) {
+              throw new Error(err.response.data);
+            } else {
+              return null;
+            }
+            return null;
           });
+        return user;
       },
     }),
   ],
 
-  callbacks: {
-    jwt: ({ token, user }) => {
-      if (user) {
-        token.id = user._id;
-      } else {
-        return token;
-      }
-    },
-    session: ({ token, session }) => {
-      if (token) {
-        session.id = token.id;
-      }
-      return token;
-    },
-  },
-  secret: process.env.JWT,
-  jwt: {
-    secret: process.env.JWT,
-    encoded: true,
+  session: {
+    strategy: "jwt",
   },
 
   pages: {
