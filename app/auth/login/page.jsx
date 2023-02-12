@@ -7,6 +7,8 @@ import { React, useEffect, useState } from "react";
 import Snowfall from "react-snowfall";
 import styles from "./login.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { updateUser } from "@/redux/userSlice";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -20,6 +22,7 @@ const page = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const session = useSession();
+  const dispatch = useDispatch();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -43,7 +46,9 @@ const page = () => {
 
   useEffect(() => {
     const { data } = session;
-    console.log(data);
+    if (data?.user) {
+      dispatch(updateUser(data.user));
+    }
   }, [session]);
 
   return (

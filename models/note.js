@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 const noteSchema = new Schema({
-  title: { type: "String", required: true, unique: true },
+  title: { type: "String", required: true },
   body: { type: "String", required: false },
   userId: { type: "String" },
 });

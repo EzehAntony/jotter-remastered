@@ -9,7 +9,7 @@ const handler = async (req, res) => {
       const newNote = await note.create({
         title: title,
         body: body,
-        userId: "120330",
+        userId: userId,
       });
 
       res.status(200).json(newNote);

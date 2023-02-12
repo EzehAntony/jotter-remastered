@@ -1,5 +1,7 @@
 "use client";
 
+import  store  from "@/redux/store";
+import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
@@ -12,7 +14,9 @@ export default function RootLayout({ children, session }) {
       */}
       <head />
       <body>
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <Provider store={store}>{children}</Provider>
+        </SessionProvider>
       </body>
     </html>
   );
