@@ -19,12 +19,12 @@ function Card({ color, rawData }) {
 
   // Checks if the characters returned are too long shortens then and adds "..." to the end of the sentence
   const addDots = () => {
-    if (rawData.header.slice(0, 51).length > 10) {
-      let copyHeader = rawData.header.slice(0, 10);
+    if (rawData.title.slice(0, 51).length > 10) {
+      let copyHeader = rawData.title.slice(0, 10);
       copyHeader = copyHeader + "...";
       setData((prev) => ({ ...prev, header: copyHeader }));
     } else {
-      setData((prev) => ({ ...prev, header: rawData.header }));
+      setData((prev) => ({ ...prev, header: rawData.title }));
     }
 
     if (rawData.body.length > 40) {
@@ -42,7 +42,7 @@ function Card({ color, rawData }) {
   }, []);
 
   const click = () => {
-    router.push(`/home/note/${rawData.id}`);
+    router.push(`/home/note/${rawData._id}`);
   };
 
   return (

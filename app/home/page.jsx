@@ -4,48 +4,61 @@ import React, { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Ubuntu } from "@next/font/google";
 import { useSession } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
-
+import axios from "axios";
 const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
-const getData = async (id) => {
-  const res = await fetch({
-    url: "http://localhost:3000/api/note/getall",
-    method: "POST",
-    "content-type": "application/json",
-    data: {
-      id: id,
-    },
-  });
-  if (!res.ok) {
-    console.log(id);
-    throw new Error("Unable  to fetch");
-  } else {
-    return res.json();
-    console.log(res);
+
+const getPosts = async (id) => {
+  try {
+    const res = await axios({
+      url: "http://localhost:3000/api/note/getall",
+      method: "POST",
+      "content-type": "application/json",
+      data: {
+        id: id,
+      },
+    });
+    if (res.statusText === "OK") {
+      return res.data;
+    }
+  } catch (err) {
+    throw new Error("Unable to fetch");
   }
 };
 
 function home() {
-  const colors = ["#E9F5FC", "#FFF5E1", "#FFE9F3", "#F3F5F7"];
-  const random = Math.floor(Math.random() * 5);
-  const rc = colors[random];
-  const [pop, setPop] = useState("none");
-  const { user } = useSelector((state) => state.user);
-  const getDataa = async () => {
-    console.log(user)
-    const data = await getData(user._id);
-    console.log(data);
+  //card color generator
+  const colorGenerator = () => {
+    const colors = ["#E9F5FC", "#FFF5E1", "#FFE9F3", "#F3F5F7"];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    return color;
   };
-  useEffect(() => {
+
+  // user session data
+  const session = useSession();
+
+  const [post, setPost] = useState(null);
+
+  const fetchData = async () => {
     if (user) {
-      alert(user)
+      const posts = await getPosts(user._id);
+      if (posts) {
+        setPost(posts);
+      } else {
+      }
+    } else {
     }
-  }, []);
+  };
+
+  const user = session.data?.user;
+  useEffect(() => {
+    fetchData();
+  }, [user]);
+
   return (
     <div className={styles.home}>
       <header>
         <h3 className={ubuntu.className}>
-          Hello, <br /> {user?.username}!
+          Hello, <br /> {user && user.username}!
         </h3>
         <input type="text" placeholder="search" />
       </header>
@@ -56,13 +69,7 @@ function home() {
 
       <div className={styles.section}>
         <div className={styles.inner}>
-          {/*           {data &&
-            data.map((e) => (
-              <Card
-                rawData={e}
-                color={colors[Math.floor(Math.random() * colors.length)]}
-              />
-            ))} */}
+          {post && post.map((e) => <Card rawData={e} color={colorGenerator()} />)}
         </div>
       </div>
 

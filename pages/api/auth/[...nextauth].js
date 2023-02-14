@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
-import user from "@/models/user";
 
 export default NextAuth({
   providers: [
@@ -20,27 +19,23 @@ export default NextAuth({
       async authorize(credentials, req) {
         const url = req.body.callbackUrl.split("/auth")[0];
         const { username, password } = credentials;
-        const user = await axios({
-          url: `${url}/api/user/login`,
-          method: "POST",
-          data: {
-            username: username,
-            password: password,
-          },
-          "content-type": "application/json",
-        })
-          .then((res) => {
-            return res.data;
-          })
-          .catch((err) => {
-            if (err.response.data) {
-              throw new Error(err.response.data);
-            } else {
-              return null;
-            }
-            return null;
+
+        try {
+          const res = await axios({
+            url: `${url}/api/user/login`,
+            method: "POST",
+            data: {
+              username: username,
+              password: password,
+            },
+            "content-type": "application/json",
           });
-        return user;
+          if (res.statusText === "OK") {
+            return res.data;
+          }
+        } catch (err) {
+          throw new Error(err.response.data);
+        }
       },
     }),
   ],
@@ -58,8 +53,11 @@ export default NextAuth({
         session.user = token.user;
       }
 
-      return session
+      return session;
     },
+  },
+  session: {
+    strategy: "jwt",
   },
 
   pages: {

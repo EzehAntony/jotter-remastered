@@ -2,7 +2,7 @@ import note from "@/models/note";
 import dbConnect from "@/utils/mongodb";
 
 const handler = async (req, res) => {
-  if (req.method === "GET") {
+  if (req.method === "POST") {
     await dbConnect();
     const { id } = req.body;
     try {

@@ -9,6 +9,7 @@ import styles from "./login.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "@/redux/userSlice";
+import { ClapSpinner } from "react-spinners-kit";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -89,7 +90,7 @@ const page = () => {
             </div>
 
             <button type={"submit"} className={ubuntu.className}>
-              {loading && "loading..."}
+              {loading && <ClapSpinner size={14} />}
               {!loading && "login"}
             </button>
           </div>

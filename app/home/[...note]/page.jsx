@@ -3,12 +3,36 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./newnote.module.css";
-const getData = async () => {
-  await fetch("/api/note");
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { ClapSpinner } from "react-spinners-kit";
+const getData = async (id) => {
+  try {
+    const res = await axios({
+      url: "http://localhost:3000/api/note/get",
+      method: "POST",
+      data: {
+        id: id,
+      },
+    });
+    if (res.statusText === "OK") {
+      console.log(res);
+      return res.data;
+    }
+  } catch (err) {
+    console.log(err);
+    throw new Error("unable to fetch");
+  }
 };
 
 function newnote({ params }) {
+  const id = params.note.slice(-1)[0];
+  const session = useSession();
+  const user = session.data.user;
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [noteData, setNoteData] = useState(null);
 
   const [input, setInput] = useState({
     title: "",
@@ -21,6 +45,21 @@ function newnote({ params }) {
     //to keep the state of the status of the note. false if old, true if new
     newStatus: null,
   });
+
+  const fetchData = async () => {
+    //check if it's a new note ot an existing one
+    //if old, fetch old data else do nothing
+    if (status.newStatus === false) {
+      const noteData = await getData(id);
+      setInput((prev) => ({ ...prev, title: noteData.title }));
+      setInput((prev) => ({ ...prev, body: noteData.body }));
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [status.newStatus]);
 
   //to check if the user has entered a title or a body
   const checkIfEntry = () => {
@@ -53,27 +92,53 @@ function newnote({ params }) {
     checkifExist();
   }, [params, status.newStatus]);
 
-  //if old, configure update, if new, save new note.
 
+  //if old, configure update, if new, save new note.
   const save = async () => {
-    console.log("Saved..");
-    if (status.newStatus === true) {
-      await fetch({
-        method: "POST",
-        url: "/api/note",
+    if (status.newStatus === false) {
+      setLoading(true);
+      await axios({
+        method: "PUT",
+        url: "http://localhost:3000/api/note/update",
         credentials: "include",
-        body: {
+        data: {
           title: input.title,
           body: input.body,
+          id: id,
         },
       })
         .then((res) => {
+          setLoading(false);
           console.log(res);
+          setSaved(true);
+          router.push("/home");
         })
         .catch((err) => {
+          setLoading(false);
           console.log(err);
         });
     } else {
+      setLoading(true);
+      await axios({
+        method: "POST",
+        url: "http://localhost:3000/api/note/create",
+        credentials: "include",
+        data: {
+          title: input.title,
+          body: input.body,
+          userId: user._id,
+        },
+      })
+        .then((res) => {
+          setLoading(false);
+          console.log(res);
+          setSaved(true);
+          router.push("/home");
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
     }
   };
 
@@ -82,11 +147,21 @@ function newnote({ params }) {
       <header>
         <div className={styles.image}>
           <img src="/left.svg" onClick={() => router.back(-1)} alt="" />
-          {status.inputStatus ? (
-            <img src="/save.png" onClick={save} className={styles.save} />
+          {status.inputStatus && user && !loading && !saved ? (
+            <img src="/cloud.svg" onClick={save} className={styles.save} />
           ) : (
             ""
           )}
+          {loading && (
+            <ClapSpinner
+              size={19}
+              frontColor={"#2CC2EC"}
+              className={styles.save}
+              loading={loading}
+            />
+          )}
+
+          {saved && <img src="/saved.svg" className={styles.save} />}
         </div>
         <input
           value={input.title}
