@@ -21,6 +21,7 @@ const getPosts = async (id) => {
       return res.data;
     }
   } catch (err) {
+    console.log(err)
     throw new Error("Unable to fetch");
   }
 };
