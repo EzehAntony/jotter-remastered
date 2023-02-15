@@ -10,7 +10,7 @@ const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
 const getPosts = async (id) => {
   try {
     const res = await axios({
-      url: "https://vercel.com/crayonne/jotter-remastered/api/note/getall",
+      url: "https://crayonne-jotter.vercel.app/api/note/getall",
       method: "POST",
       "content-type": "application/json",
       data: {

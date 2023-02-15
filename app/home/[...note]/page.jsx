@@ -9,7 +9,7 @@ import { ClapSpinner } from "react-spinners-kit";
 const getData = async (id) => {
   try {
     const res = await axios({
-      url: "https://vercel.com/crayonne/jotter-remastered/api/note/get",
+      url: "https://crayonne-jotter.vercel.app/api/note/get",
       method: "POST",
       data: {
         id: id,
@@ -99,7 +99,7 @@ function newnote({ params }) {
       setLoading(true);
       await axios({
         method: "PUT",
-        url: "https://vercel.com/crayonne/jotter-remastered/api/note/update",
+        url: "https://crayonne-jotter.vercel.app/api/note/update",
         credentials: "include",
         data: {
           title: input.title,
@@ -121,7 +121,7 @@ function newnote({ params }) {
       setLoading(true);
       await axios({
         method: "POST",
-        url: "https://vercel.com/crayonne/jotter-remastered/api/note/create",
+        url: "https://crayonne-jotter.vercel.app/api/note/create",
         credentials: "include",
         data: {
           title: input.title,
