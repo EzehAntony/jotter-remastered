@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./newnote.module.css";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { ClapSpinner } from "react-spinners-kit";
 const getData = async (id) => {
   try {
     const res = await axios({
-      url: "http://localhost:3000/api/note/get",
+      url: "https://vercel.com/crayonne/jotter-remastered/api/note/get",
       method: "POST",
       data: {
         id: id,
@@ -26,10 +26,11 @@ const getData = async (id) => {
 };
 
 function newnote({ params }) {
+  const router = useRouter();
+  console.log(params);
   const id = params.note.slice(-1)[0];
   const session = useSession();
   const user = session.data.user;
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [noteData, setNoteData] = useState(null);
@@ -92,14 +93,13 @@ function newnote({ params }) {
     checkifExist();
   }, [params, status.newStatus]);
 
-
   //if old, configure update, if new, save new note.
   const save = async () => {
     if (status.newStatus === false) {
       setLoading(true);
       await axios({
         method: "PUT",
-        url: "http://localhost:3000/api/note/update",
+        url: "https://vercel.com/crayonne/jotter-remastered/api/note/update",
         credentials: "include",
         data: {
           title: input.title,
@@ -121,7 +121,7 @@ function newnote({ params }) {
       setLoading(true);
       await axios({
         method: "POST",
-        url: "http://localhost:3000/api/note/create",
+        url: "https://vercel.com/crayonne/jotter-remastered/api/note/create",
         credentials: "include",
         data: {
           title: input.title,

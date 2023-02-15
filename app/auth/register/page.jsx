@@ -7,6 +7,8 @@ import { React, useEffect, useState } from "react";
 import Snowfall from "react-snowfall";
 import styles from "./register.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
+import axios from "axios";
+import user from "@/models/user";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -26,18 +28,22 @@ const page = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await signIn("credentials", {
-        redirect: false,
-        username: username,
-        password: password,
+      const res = await axios({
+        url: "https://vercel.com/crayonne/jotter-remastered/api/user/register",
+        method: "POST",
+        data: {
+          username: username,
+          password: password,
+        },
       });
-      if (res.error) {
-        setLoading(false);
-        setError(res.error);
-        console.log(res);
+      if (res.statusText === "OK") {
+        alert("Registered");
+        router.push("/auth/login");
+        return res.data;
       }
     } catch (err) {
       console.log(error);
+      setError(err.response.data);
       setLoading(false);
     }
   };
@@ -83,11 +89,7 @@ const page = () => {
             </button>
           </div>
 
-          {error && error === "CredentialsSignin" ? (
-            <h5 className={(styles.error, ubuntu.className)}>
-              {"Something went wrong"}
-            </h5>
-          ) : (
+          {error && (
             <h5 className={(styles.error, ubuntu.className)}>{error}</h5>
           )}
         </form>
