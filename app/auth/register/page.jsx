@@ -8,7 +8,7 @@ import Snowfall from "react-snowfall";
 import styles from "./register.module.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import axios from "axios";
-import user from "@/models/user";
+import { ClapSpinner } from "react-spinners-kit";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -25,27 +25,25 @@ const page = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await axios({
-        url: "/api/user/register",
-        method: "POST",
-        data: {
-          username: username,
-          password: password,
-        },
-      });
-      if (res.statusText === "OK") {
-        alert("Registered");
+    setLoading(true);
+    setError(null);
+    await axios({
+      url: "/api/user/register",
+      method: "POST",
+      data: {
+        username: username,
+        password: password,
+      },
+    })
+      .then((res) => {
+        setError("Registered");
         router.push("/auth/login");
-        return res.data;
-      }
-    } catch (err) {
-      console.log(error);
-      setError(err.response.data);
-      setLoading(false);
-    }
+      })
+      .catch((err) => {
+        console.log(error);
+        setError(err.response.data);
+        setLoading(false);
+      });
   };
 
   return (
@@ -84,7 +82,8 @@ const page = () => {
             </div>
 
             <button type={"submit"} className={ubuntu.className}>
-              {loading && "loading..."}
+              {loading && <ClapSpinner size={14} />}
+
               {!loading && "register"}
             </button>
           </div>
