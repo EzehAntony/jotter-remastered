@@ -30,6 +30,7 @@ function home() {
 
   // user session data
   const session = useSession();
+  const user = session.data?.user;
 
   //card color generator
   const colorGenerator = () => {
@@ -52,7 +53,6 @@ function home() {
     }
   };
 
-  const user = session.data?.user;
   useEffect(() => {
     fetchData();
   }, [user]);
