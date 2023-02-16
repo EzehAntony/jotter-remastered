@@ -1,0 +1,1 @@
+getServerSide session holds the data of the authenticated user api routes can be protected using them.

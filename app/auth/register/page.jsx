@@ -29,7 +29,7 @@ const page = () => {
       setLoading(true);
       setError(null);
       const res = await axios({
-        url: "https://crayonne-jotter.vercel.app/api/user/register",
+        url: "/api/user/register",
         method: "POST",
         data: {
           username: username,

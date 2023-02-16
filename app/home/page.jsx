@@ -10,7 +10,7 @@ const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
 const getPosts = async (id) => {
   try {
     const res = await axios({
-      url: "https://crayonne-jotter.vercel.app/api/note/getall",
+      url: "/api/note/getall",
       method: "POST",
       "content-type": "application/json",
       data: {
@@ -21,21 +21,22 @@ const getPosts = async (id) => {
       return res.data;
     }
   } catch (err) {
-    console.log(err)
-    throw new Error("Unable to fetch");
+    console.log(err);
   }
 };
 
 function home() {
+  const [loading, setLoading] = useState(false);
+
+  // user session data
+  const session = useSession();
+
   //card color generator
   const colorGenerator = () => {
     const colors = ["#E9F5FC", "#FFF5E1", "#FFE9F3", "#F3F5F7"];
     const color = colors[Math.floor(Math.random() * colors.length)];
     return color;
   };
-
-  // user session data
-  const session = useSession();
 
   const [post, setPost] = useState(null);
 
@@ -70,7 +71,9 @@ function home() {
 
       <div className={styles.section}>
         <div className={styles.inner}>
-          {post && post.map((e) => <Card rawData={e} color={colorGenerator()} />)}
+          {loading && "loading..."}
+          {post &&
+            post.map((e) => <Card rawData={e} color={colorGenerator()} />)}
         </div>
       </div>
 
