@@ -5,28 +5,13 @@ import styles from "./home.module.css";
 import { Ubuntu } from "@next/font/google";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import Loading from "@/components/loading/Loading";
 const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
-
-const getPosts = async (id) => {
-  try {
-    const res = await axios({
-      url: "/api/note/findall",
-      method: "POST",
-      "content-type": "application/json",
-      data: {
-        id: id,
-      },
-    });
-    if (res.statusText === "OK") {
-      return res.data;
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 function home() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [post, setPost] = useState(null);
 
   // user session data
   const session = useSession();
@@ -39,16 +24,27 @@ function home() {
     return color;
   };
 
-  const [post, setPost] = useState(null);
-
   const fetchData = async () => {
     if (user) {
-      const posts = await getPosts(user._id);
-      if (posts) {
-        console.log(posts);
-        setPost(posts);
-      } else {
-      }
+      setLoading(true);
+      setError(false);
+      await axios({
+        method: "POST",
+        url: "/api/note/findall",
+        data: {
+          id: user._id,
+        },
+      })
+        .then((res) => {
+          setError(false);
+          setLoading(false);
+          setPost(res.data);
+        })
+        .catch((err) => {
+          setError(true);
+          setLoading(false);
+          console.log(res);
+        });
     } else {
     }
   };
@@ -72,9 +68,12 @@ function home() {
 
       <div className={styles.section}>
         <div className={styles.inner}>
-          {loading && "loading..."}
+          {loading && <Loading />}
+          {error && <img src="/error.gif" />}
           {post &&
-            post.map((e) => <Card rawData={e} color={colorGenerator()} />)}
+            post.map((e) => (
+              <Card rawData={e} key={e._id} color={colorGenerator()} />
+            ))}
         </div>
       </div>
 
