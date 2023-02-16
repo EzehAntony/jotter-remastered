@@ -17,19 +17,26 @@
   box-shadow: 2px 2px 22px rgb(168, 168, 168);
 }
 
-.card header {
+.card .header {
+  width: 100%;
   min-height: 50px;
   background-color: rgba(0, 0, 0, 0.096);
   position: absolute;
   top: 0;
-  border-radius: 10px 10px 0 0;
+  border-radius: 0px 10px 0px 10px;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-weight: 900;
-  font-size: 19px;
 }
 
-.card h3 {
+.card h2 {
+  font-size: 18px;
+  padding: 0 0 0 10px;
+  width: 100%;
+}
+
+.card > h3 {
   padding: 0 5%;
   margin-top: 50px;
   font-size: 15px;

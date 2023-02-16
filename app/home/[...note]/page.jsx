@@ -52,8 +52,8 @@ function newnote({ params }) {
     //if old, fetch old data else do nothing
     if (status.newStatus === false) {
       const noteData = await getData(id);
-      setInput((prev) => ({ ...prev, title: noteData.title }));
-      setInput((prev) => ({ ...prev, body: noteData.body }));
+      setInput((prev) => ({ ...prev, title: noteData?.title }));
+      setInput((prev) => ({ ...prev, body: noteData?.body }));
     } else {
     }
   };

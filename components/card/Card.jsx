@@ -51,7 +51,9 @@ function Card({ color, rawData }) {
       className={styles.card}
       style={{ backgroundColor: color }}
     >
-      <header className={inter.className}>{data?.header}</header>
+      <div className={styles.header}>
+        <h2 className={inter.className}>{data?.header}</h2>
+      </div>
 
       <h3 className={inter.className}>{data?.body}</h3>
     </div>

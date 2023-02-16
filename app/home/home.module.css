@@ -12,25 +12,33 @@
   max-width: 1000px;
 }
 
-.home header {
+.home > header {
+  background-color: white;
+  color: black;
   width: 100%;
+  min-height: 150px;
+  top: 0;
+  padding: 20px;
+  position: fixed;
   display: flex;
+  flex-direction: column;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 10000;
 }
 
-.home header * {
+.home > header * {
   margin: 10px 0;
   width: 100%;
 }
 
-.home header h3 {
+.home > header h3 {
   font-weight: 600;
   text-transform: capitalize;
 }
 
-.home header input {
+.home > header input {
   height: 50px;
   border-radius: 5px;
   margin: 20px 0;
@@ -56,6 +64,7 @@
   justify-content: center;
   align-items: center;
   padding-bottom: 80px;
+  margin-top: 150px;
 }
 
 .inner {
