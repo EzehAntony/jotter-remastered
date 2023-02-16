@@ -10,7 +10,7 @@ const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
 const getPosts = async (id) => {
   try {
     const res = await axios({
-      url: "/api/note/getall",
+      url: "/api/note/findall",
       method: "POST",
       "content-type": "application/json",
       data: {
