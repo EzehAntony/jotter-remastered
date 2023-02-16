@@ -6,24 +6,6 @@ import styles from "./newnote.module.css";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { ClapSpinner } from "react-spinners-kit";
-const getData = async (id) => {
-  try {
-    const res = await axios({
-      url: "/api/note/get",
-      method: "POST",
-      data: {
-        id: id,
-      },
-    });
-    if (res.statusText === "OK") {
-      console.log(res);
-      return res.data;
-    }
-  } catch (err) {
-    console.log(err);
-    throw new Error("unable to fetch");
-  }
-};
 
 function newnote({ params }) {
   const router = useRouter();
@@ -47,19 +29,31 @@ function newnote({ params }) {
     newStatus: null,
   });
 
-  const fetchData = async () => {
-    //check if it's a new note ot an existing one
+  const fetchData = async (id) => {
+    //check if it's a new note or an existing one
     //if old, fetch old data else do nothing
     if (status.newStatus === false) {
-      const noteData = await getData(id);
-      setInput((prev) => ({ ...prev, title: noteData?.title }));
-      setInput((prev) => ({ ...prev, body: noteData?.body }));
+      await axios({
+        url: "/api/note/get",
+        method: "POST",
+        data: {
+          id: id,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          setInput((prev) => ({ ...prev, title: res.data.title }));
+          setInput((prev) => ({ ...prev, body: res.data.body }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(id);
   }, [status.newStatus]);
 
   //to check if the user has entered a title or a body
