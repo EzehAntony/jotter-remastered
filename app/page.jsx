@@ -12,7 +12,7 @@ export default function splash() {
 
   useEffect(() => {
     setTimeout(() => {
-      //router.push("/auth/login");
+      router.push("/auth/login");
     }, 2500);
   });
   return (
@@ -22,7 +22,6 @@ export default function splash() {
       <h3 className={stylish.className}>
         Create free notes and save them in our cloud!
       </h3>
-      <button onClick={() => router.push("/auth/login")}>Start</button>
       <Snowfall color="#00BCF5" />
     </main>
   );

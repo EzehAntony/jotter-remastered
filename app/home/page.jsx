@@ -44,6 +44,7 @@ function home() {
     if (user) {
       const posts = await getPosts(user._id);
       if (posts) {
+        console.log(posts);
         setPost(posts);
       } else {
       }
