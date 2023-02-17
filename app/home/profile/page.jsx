@@ -60,7 +60,7 @@ function page() {
         </label>
       </div>
 
-      <button onClick={signOut()}>
+      <button onClick={signOut}>
         <img src="/exit.svg" alt="" />
         <h3>Logout</h3>
       </button>
