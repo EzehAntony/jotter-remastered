@@ -43,12 +43,14 @@ function home() {
         .catch((err) => {
           setError(true);
           setLoading(false);
-          console.log(res);
         });
     } else {
     }
   };
 
+  const reload = () => {
+    fetchData();
+  };
   useEffect(() => {
     fetchData();
   }, [user]);
@@ -70,6 +72,11 @@ function home() {
         <div className={styles.inner}>
           {loading && <Loading />}
           {error && <img src="/error.gif" />}
+          {error && (
+            <button onClick={reload} className={styles.reload}>
+              Reload
+            </button>
+          )}
           {post &&
             post.map((e) => (
               <Card rawData={e} key={e._id} color={colorGenerator()} />

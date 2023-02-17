@@ -1,8 +1,9 @@
 .profile {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  background-color: black;
 }
 
 .profile * {
@@ -10,75 +11,86 @@
 }
 
 .profile header {
-  background-color: white;
+  background-color: black;
+  width: 100%;
   height: 80px;
-  padding: 10px 0;
+  padding: 10px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   color: black;
 }
 
 .profile header h1 {
   font-size: 20px;
+  color: transparent;
+  text-transform: capitalize;
+  background-image: linear-gradient(40deg, aqua, rgb(190, 144, 236), #ff3299);
+  background-clip: text;
+}
+
+.profile header img {
+  width: 35px;
 }
 
 .other {
+  background-color: #000000;
+  width: 100%;
+  min-height: 300px;
+  margin-top: 100px;
+}
+
+.other label {
+  min-height: 60px;
   width: 100%;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 0.2px solid rgb(80, 80, 80);
+  background-color: black;
+}
+
+.other label:hover {
+  background-color: #353535;
+  border: 0;
+}
+
+.other ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.label {
-  margin: 20px 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.other ul:hover {
+  background-color: #353535;
+  border: 0;
 }
 
-.card {
-  width: 200px;
-  height: 250px;
-  background-color: #e9f5fc;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px 0 10px 0;
-  margin: 10px;
-  cursor: pointer;
-}
-
-.label:nth-of-type(2) .card {
-  background-color: #fff5e1;
-}
-.label:nth-of-type(3) .card {
-  background-color: #ffe9f3;
-}
-.label:nth-of-type(4) .card {
-  background-color: #f3f5f7;
-}
-
-.card h1 {
-  color: #afafaf;
-  font-size: 60px;
-}
-
-.other h3 {
-  font-weight: 600;
+.other ul h3 {
+  color: white;
   text-transform: capitalize;
-  margin-top: 5px;
-  margin-left: 5px;
-  font-size: 17px;
+  font-size: 15px;
 }
 
-@media (max-width: 800px) {
-  .card {
-    width: 150px;
-    height: 180px;
-    margin: 5px;
-  }
+.profile button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 50px;
+  padding: 15px;
+  background-color: #41acd7;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  color: white;
+}
+
+.profile button img {
+  width: 20px;
+  margin-right: 15px;
 }

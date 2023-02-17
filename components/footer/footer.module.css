@@ -14,7 +14,6 @@
   width: 90%;
   max-width: 800px;
   border-radius: 20px;
-  box-shadow: 2px 2px 22px #b8b8b8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +26,7 @@
 }
 
 .innerFooter img:nth-of-type(2) {
-  background-color: #2cc2ec;
+  background-color: rgba(0, 145, 202, 0.733);
   width: 50px;
   border-radius: 50%;
 }

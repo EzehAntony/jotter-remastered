@@ -21,6 +21,7 @@ const page = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const session = useSession();
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const page = () => {
       password: password,
     }).then(({ ok, error }) => {
       if (ok) {
-        setError("Successfull login");
+        setSuccess("Successfull login");
         setLoading(false);
         router.push("/home");
       } else {
@@ -102,6 +103,7 @@ const page = () => {
           ) : (
             <h5 className={(styles.error, ubuntu.className)}>{error}</h5>
           )}
+          <h5 className={(styles.success, ubuntu.className)}>{success}</h5>
         </form>
         <p className={ubuntu.className}>
           Don't have an account? <Link href={"/auth/register"}> register</Link>

@@ -163,7 +163,7 @@ function newnote({ params }) {
             setInput((prev) => ({ ...prev, title: e.target.value }))
           }
           type="text"
-          maxLength={15}
+          maxLength={20}
           placeholder="title"
         />
       </header>
