@@ -21,7 +21,7 @@ const page = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const session = useSession();
+  const [success, setSuccess] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -38,11 +38,19 @@ const page = () => {
       .then((res) => {
         setError("Registered");
         router.push("/auth/login");
+        setSuccess(true);
       })
       .catch((err) => {
-        console.log(error);
-        setError(err.response.data);
-        setLoading(false);
+        console.log(err);
+        if (err.message == "Request failed with status code 500") {
+          setError("Network error");
+          setLoading(false);
+          setSuccess(false);
+        } else {
+          setError(err.response.data);
+          setLoading(false);
+          setSuccess(false);
+        }
       });
   };
 
@@ -91,6 +99,7 @@ const page = () => {
           {error && (
             <h5 className={(styles.error, ubuntu.className)}>{error}</h5>
           )}
+          {success && <h5 className={styles.success}>Login successfull</h5>}
         </form>
         <p className={ubuntu.className}>
           Already have an account? <Link href={"/auth/login"}> login</Link>

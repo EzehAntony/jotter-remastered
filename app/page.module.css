@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: white;
+  background-color: black;
   padding: 0 5%;
 }
 
@@ -17,27 +17,18 @@
 }
 
 .main h1 {
-  font-size: 30px;
+  font-size: 40px;
   text-transform: uppercase;
   margin: 10px 0 0 0;
   font-weight: 800;
+  color: white;
 }
 
 .main h3 {
+  width: 90%;
   font-size: 20px;
   font-weight: 600;
   margin: 15px 5px;
-  color: #3d3d3d;
+  color: #a1a1a1;
   text-align: center;
-}
-
-.main button {
-  padding: 15px 60px;
-  background-color: black;
-  color: white;
-  border: 0;
-  cursor: pointer;
-  z-index: 2;
-  position: absolute;
-  bottom: 20px;
 }

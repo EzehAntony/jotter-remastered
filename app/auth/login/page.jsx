@@ -41,7 +41,12 @@ const page = () => {
         router.push("/home");
       } else {
         setLoading(false);
-        setError(error);
+        console.log(error);
+        if (error) {
+          setError("Network Error");
+        } else {
+          setError(error);
+        }
       }
     });
   };
