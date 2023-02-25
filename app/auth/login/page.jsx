@@ -42,8 +42,8 @@ const page = () => {
       } else {
         setLoading(false);
         console.log(error);
-        if (error) {
-          setError("Network Error");
+        if (error.includes("html")) {
+          setError("network Error");
         } else {
           setError(error);
         }

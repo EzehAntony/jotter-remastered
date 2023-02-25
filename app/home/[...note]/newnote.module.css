@@ -27,6 +27,8 @@
   align-items: center;
   top: 0;
   padding: 0 10px;
+  position: rela
+  ;
   border-bottom: 1px solid rgb(219, 219, 219);
 }
 
@@ -40,6 +42,12 @@
 
 .newnote .image img {
   cursor: pointer;
+}
+
+.delete {
+  position: absolute;
+  width: 30px;
+  right: calc(15px + 30px);
 }
 
 .newnote input {

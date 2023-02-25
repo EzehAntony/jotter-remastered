@@ -49,13 +49,13 @@ function page() {
         <label>
           <ul>
             <h3 className={inter.className}>Username</h3>
-            <h3 className={inter.className}>Nazville</h3>
+            <h3 className={inter.className}>{user?.username}</h3>
           </ul>
         </label>
         <label>
           <ul>
             <h3 className={inter.className}>total notes</h3>
-            <h3 className={inter.className}>30</h3>
+            <h3 className={inter.className}>{data?.length}</h3>
           </ul>
         </label>
       </div>

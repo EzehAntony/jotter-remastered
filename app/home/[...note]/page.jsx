@@ -9,7 +9,6 @@ import { ClapSpinner } from "react-spinners-kit";
 
 function newnote({ params }) {
   const router = useRouter();
-  console.log(params);
   const id = params.note.slice(-1)[0];
   const session = useSession();
   const user = session.data.user;
@@ -41,12 +40,10 @@ function newnote({ params }) {
         },
       })
         .then((res) => {
-          console.log(res);
           setInput((prev) => ({ ...prev, title: res.data.title }));
           setInput((prev) => ({ ...prev, body: res.data.body }));
         })
         .catch((err) => {
-          console.log(err);
         });
     } else {
     }
@@ -136,6 +133,25 @@ function newnote({ params }) {
     }
   };
 
+  const deleteNote = async () => {
+    setLoading(true);
+    await axios({
+      method: "DELETE",
+      url: "/api/note/delete",
+      data: {
+        id: id,
+      },
+    })
+      .then((res) => {
+        setLoading(false);
+        router.push("/home");
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
+
   return (
     <div className={styles.newnote}>
       <header>
@@ -155,6 +171,14 @@ function newnote({ params }) {
             />
           )}
 
+          {status.inputStatus && (
+            <img
+              src="/delete.svg"
+              onClick={deleteNote}
+              className={styles.delete}
+              alt=""
+            />
+          )}
           {saved && <img src="/saved.svg" className={styles.save} />}
         </div>
         <input
