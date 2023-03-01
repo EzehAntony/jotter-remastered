@@ -43,8 +43,7 @@ function newnote({ params }) {
           setInput((prev) => ({ ...prev, title: res.data.title }));
           setInput((prev) => ({ ...prev, body: res.data.body }));
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     } else {
     }
   };
@@ -171,7 +170,7 @@ function newnote({ params }) {
             />
           )}
 
-          {status.inputStatus && (
+          {status.inputStatus && !status.newStatus && (
             <img
               src="/delete.svg"
               onClick={deleteNote}
