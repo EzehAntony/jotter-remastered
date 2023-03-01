@@ -118,3 +118,31 @@
   border: 0;
   border-radius: 5px 0 5px 0;
 }
+
+.noData {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.noData img {
+  width: 80%;
+  max-width: 300px;
+}
+
+.noData h3 {
+  margin: 10px 0;
+}
+
+.noData button {
+  padding: 15px 30px;
+  width: 80%;
+  max-width: 400px;
+  background-color: #41acd7;
+  border: 0;
+  outline: none;
+  border-radius: 10px 0 10px 0;
+  cursor: pointer;
+}

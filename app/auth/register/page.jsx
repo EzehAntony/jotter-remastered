@@ -73,7 +73,9 @@ const page = () => {
                 type="text"
                 value={username}
                 required={true}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) =>
+                  setUsername(e.target.value.trim().toLowerCase())
+                }
               />
             </div>
             <div className={styles.userLabel}>
@@ -82,10 +84,12 @@ const page = () => {
               </h3>
               <input
                 className={styles.authInput}
-                type="text"
+                type="password"
                 required={true}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) =>
+                  setPassword(e.target.value.trim().toLowerCase())
+                }
               />
             </div>
 
@@ -99,7 +103,6 @@ const page = () => {
           {error && (
             <h5 className={(styles.error, ubuntu.className)}>{error}</h5>
           )}
-          {success && <h5 className={styles.success}>Login successfull</h5>}
         </form>
         <p className={ubuntu.className}>
           Already have an account? <Link href={"/auth/login"}> login</Link>

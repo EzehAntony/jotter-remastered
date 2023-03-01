@@ -78,7 +78,7 @@ const page = () => {
                 value={username}
                 required={true}
                 onChange={(e) =>
-                  setUsername(e.target.value.trim().toLocaleLowerCase())
+                  setUsername(e.target.value.trim().toLowerCase())
                 }
               />
             </div>
@@ -88,10 +88,12 @@ const page = () => {
               </h3>
               <input
                 className={styles.authInput}
-                type="text"
+                type="password"
                 required={true}
                 value={password}
-                onChange={(e) => setPassword(e.target.value.trim())}
+                onChange={(e) =>
+                  setPassword(e.target.value.trim().toLowerCase())
+                }
               />
             </div>
 

@@ -7,11 +7,15 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import Loading from "@/components/loading/Loading";
 const ubuntu = Ubuntu({ weight: "500", subsets: ["cyrillic"] });
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
+  const router = useRouter();
+  console.log(post);
 
   // user session data
   const session = useSession();
@@ -61,7 +65,7 @@ function home() {
         <h3 className={ubuntu.className}>
           Hello, <br /> {user && user.username}!
         </h3>
-        <input type="text" placeholder="search" />
+        {/* <input type="text" placeholder="search" /> */}
       </header>
 
       <div className={styles.nav}>
@@ -81,6 +85,14 @@ function home() {
             post.map((e) => (
               <Card rawData={e} key={e._id} color={colorGenerator()} />
             ))}
+          {post && post.length === 0 && (
+            <div className={styles.noData}>
+              <img src="/empty.svg" />
+              <button onClick={() => router.push("/home/note")}>
+                Create Note
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
