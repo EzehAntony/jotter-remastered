@@ -46,6 +46,7 @@ function home() {
         })
         .catch((err) => {
           setError(true);
+          setPost(null);
           setLoading(false);
         });
     } else {
