@@ -1,5 +1,6 @@
 "use client";
 import Card from "@/components/card/Card";
+import "../globals.css";
 import React, { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Ubuntu } from "@next/font/google";
@@ -74,7 +75,7 @@ function home() {
       </div>
 
       <div className={styles.section}>
-        <div className={styles.inner}>
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center items-center ">
           {loading && <Loading />}
           {error && <img src="/error.gif" />}
           {error && (
